@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<!-- 定义文档类型为HTML5，告知浏览器使用HTML5规范解析和渲染页面 -->
+<html lang="en">
+<!-- HTML文档的根元素，`lang="en"` 指定文档语言为英语 -->
+
+<head>
+    <!-- 文档头部，包含元信息和引用的外部资源（如样式表、脚本） -->
+    <meta charset="UTF-8">
+    <!-- 设置文档字符集为UTF-8，确保文本正确显示 -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 设置视口元标签，使页面在不同设备上具有合适的缩放比例和布局 -->
+
+    <link rel="stylesheet" href="../static/assets/css/styles.css">
+    <script src="https://unpkg.com/sober/dist/sober.min.js"></script>
+    <!-- 引入外部CSS样式表，路径为相对路径 "styles.css" -->
+    <style>
+        /* Basic responsive table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+
+            table,
+            thead,
+            tbody,
+            th,
+            td,
+            tr {
+                display: block;
+            }
+
+            thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            tr {
+                margin-bottom: 1rem;
+            }
+
+            td {
+                border: none;
+                border-bottom: 1px solid #ddd;
+                position: relative;
+                padding-left: 50%;
+            }
+
+            td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 50%;
+                padding: 8px;
+                font-weight: bold;
+            }
+        }
+    </style>
+    <title>Page with Navigation Bar</title>
+    <!-- 设置文档标题，将在浏览器标签页显示 -->
+
+</head>
+
+<body>
+    <!-- HTML文档的主体部分，包含可见的内容 -->
+
+
+    <nav class="navbar">
+        <!-- 创建一个导航栏，类名为 "navbar" -->
+        <div class="navbar-brand">
+            <!-- 在导航栏内创建一个包含品牌标识的区域，类名为 "navbar-brand" -->
+            <a href="#" class="logo">Logo</a>
+            <!-- 使用锚点标签创建品牌Logo链接，类名为 "logo"，链接地址为 "#" -->
+        </div>
+        <ul class="navbar-menu">
+            <!-- 创建一个无序列表，作为导航菜单，类名为 "navbar-menu" -->
+            <li><a href="page0.html" class="menu-item">可视化</a>
+            </li>
+            <!-- 在导航菜单中添加一个列表项，包含指向 "#" 的链接，类名为 "menu-item"，文本为 "Home" -->
+            <li><a href="page1.html" class="menu-item">管理</a></li>
+            <!-- 同上，文本为 "About" -->
+            <li><a href="page2.html" class="menu-item">黑名单</a></li>
+            <!-- 同上，文本为 "Services" -->
+            <li><a href="page3.html" class="menu-item">联系名单</a></li>
+            <!-- 同上，文本为 "Contact" -->
+        </ul>
+    </nav>
+
+    <body>
+        <s-button class="model-button" data-model="lr" style="background: #009688;width:33%">Logistic
+            Regression</s-button>
+        <s-button class="model-button" data-model="rf" style="background: #009688;width:33%">Random Forest</s-button>
+        <s-button class="model-button" data-model="xgb" style="background: #009688;width:33%">XGBoost</s-button>
+
+        <script>
+            document.querySelectorAll('.model-button').forEach((button) => {
+                button.addEventListener('click', async (event) => {
+                    const model = event.target.dataset.model;
+                    console.log(model);
+                    try {
+                        // 将参数添加到URL查询字符串中
+                        const url = "api/post_model?model=" + model;
+
+                        const response = await fetch(url, {
+                            method: 'GET',
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+
+                        const data = await response.json();
+                        console.log('Response:', data);
+                    } catch (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+        </script>
+    </body>
+
+    <main>
+        <table id="myTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>axis_x</th>
+                    <th>axis_y</th>
+                    <th>kind</th>
+                    <th>info</th>
+                    <th>del</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </main>
+    <script>
+        async function fetchAndLogData(url) {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch data from ${url}, status code: ${response.status}`);
+            }
+            return await response.json();
+        }
+        let nodesResponse = []
+        let linksResponse = []
+        async function fetchData() {
+            try {
+                const url1 = "http://127.0.0.1:5050/api/get_nodes";
+                const url2 = "http://127.0.0.1:5050/api/get_links";
+
+                nodesResponse = await fetchAndLogData(url1);
+                linksResponse = await fetchAndLogData(url2);
+
+                console.log("Nodes:", nodesResponse, typeof (nodesResponse));
+                console.log("Links:", linksResponse, typeof (linksResponse));
+                // reuturn nodesResponse,linksResponse
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function createTableRows(tableData) {
+            fetchData().then(() => {
+                const tbody = document.querySelector('#myTable tbody');
+
+                console.log("Nodes:", nodesResponse, typeof (nodesResponse));
+                console.log("Links:", linksResponse, typeof (linksResponse));
+
+                nodesResponse.forEach((node) => {
+                    console.log(node)
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                    <td>${node.name}</td>
+                    <td>${node.x}</td>
+                    <td>${node.y}</td>
+                    <td>${node.kind}</td>
+                    <td>${node.info}</td>
+                
+                     `;
+                    const button = document.createElement('button');
+                    button.textContent = 'Del'; // Set the button label
+                    // Use a closure to capture the necessary parameters
+                    button.addEventListener('click', () => {
+                        handleButtonClick(node); // Pass the desired parameters to the event handler
+                    });
+                    row.appendChild(button);
+                    tbody.appendChild(row);
+                })
+                console.log("hello");
+            })
+        }
+        function handleButtonClick(rowData) {
+            console.log('Clicked on:', rowData.name);
+
+            url = "http://127.0.0.1:5050/api/del_node?name=" + String(rowData.name);
+            console.log(url)
+            fetch(url).then({
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: rowData.name,
+                })
+            })
+        }
+
+        const tableData = [
+            ['Row 1 Data 1', 'Row 1 Data 2', 'Row 1 Data 3', 'Row 1 Data 4'],
+            ['Row 2 Data 1', 'Row 2 Data 2', 'Row 2 Data 3', 'Row 2 Data 4'],
+            ['Row 3 Data 1', 'Row 3 Data 2', 'Row 3 Data 3', 'Row 3 Data 4'],
+            ['Row 4 Data 1', 'Row 4 Data 2', 'Row 4 Data 3', 'Row 4 Data 4'],
+        ];
+
+        createTableRows(tableData);
+    </script>
+    <footer style="position: fixed;bottom:0">
+        <!-- 创建页脚区域 -->
+        <p>&copy; 2023 Your Company. All rights reserved.</p>
+        <!-- 添加版权信息文本 -->
+        <ul class="social-icons">
+            <!-- 创建一个无序列表，类名为 "social-icons"，用于放置社交媒体图标 -->
+            <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+            <!-- 添加一个列表项，包含指向 "#" 的链接，其中包含一个使用Font Awesome库的Facebook图标 -->
+            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+            <!-- 同上，使用Twitter图标 -->
+            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+            <!-- 同上，使用Instagram图标 -->
+        </ul>
+    </footer>
+
+
+    <!-- 引入外部JavaScript文件，路径为相对路径 "scripts.js" -->
+
+</body>
+
+</html>
+
+
+<!-- 主要内容区域 -->
+<!-- <section id="hero">
+          
+<h1>Welcome to Our Page</h1> -->
+<!-- 添加一级标题，文本为 "Welcome to Our Page" -->
+<!-- <p>A brief introduction to what this page is about and its purpose.</p> -->
+<!-- 添加段落文本，简述页面主题和目的 -->
+<!-- <a href="#" class="cta-button">Learn More</a> -->
+<!-- 添加一个呼吁行动（Call-to-action，CTA）按钮，类名为 "cta-button"，链接地址为 "#"，文本为 "Learn More" -->
+<!-- HTML structure -->

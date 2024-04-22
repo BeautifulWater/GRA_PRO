@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 当文档加载完成后执行请求
+            // fetch('/api/edges')
+            //     .then(response => {
+            //         if (!response.ok) {
+            //             throw new Error('Network response was not ok');
+            //         }
+            //         console.log(response.json())
+            //         return response.json();
+            //     })
+            // .then(edgesData => {
+            //     // 在这里，edgesData 是一个 JavaScript 对象数组，您可以将其分配给 ECharts 或进行其他处理
+            //     console.log('Received edges data:', edgesData);
+
+            //     // 假设您有一个名为 myChart 的 ECharts 实例
+            //     // 更新图表数据
+            //     myChart.setOption({
+            //         series: [{
+            //             // ... 其他系列配置 ...
+            //             data: edgesData,
+            //             // ... 其他系列配置 ...
+            //         }]
+            //     });
+            // })
+            // .catch(error => {
+            //     console.error('Error fetching edges data:', error);
+            // });
+        });
+    </script>
+    <title>Example Web Page</title>
+
+</head>
+
+<body>
+    <div class="container">
+        <div id="chart-container" style="width: 100%; height: 800px;">111</div>
+        <script>
+            async function fetchAndLogData(url) {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch data from ${url}, status code: ${response.status}`);
+                }
+                return await response.json();
+            }
+
+            async function fetchData() {
+                try {
+                    const url1 = "http://127.0.0.1:5050/api/get_nodes";
+                    const url2 = "http://127.0.0.1:5050/api/get_links";
+
+                    const nodesResponse = await fetchAndLogData(url1);
+                    console.log(nodesResponse[0]);
+
+                    const linksResponse = await fetchAndLogData(url2);
+
+                    console.log("Nodes:", nodesResponse);
+                    console.log("Links:", linksResponse);
+
+                    // Now you can use the fetched data as needed:
+                    const nodes = nodesResponse;
+                    const links = linksResponse;
+
+                    var chartContainer = document.getElementById('chart-container');
+                    // 初始化 ECharts 实例
+                    var myChart = echarts.init(chartContainer);
+
+                    var option = {
+                        title: {
+                            text: 'Basic Graph'
+                        },
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: function (params) {
+                                return params.data.name + ': ' + params.data.value;
+                            }
+                        },
+                        animationDurationUpdate: 1500,
+                        animationEasingUpdate: 'quinticInOut',
+                        series: [{
+                            type: 'graph',
+                            layout: 'none',
+                            symbolSize: 50,
+                            roam: true,
+                            label: {
+                                show: true
+                            },
+                            edgeSymbol: ['circle', 'arrow'],
+                            edgeSymbolSize: [4, 10],
+                            edgeLabel: {
+                                fontSize: 20
+                            },
+                            data: nodes,
+                            links: links,
+                            lineStyle: {
+                                opacity: 0.1,
+                                width: 2,
+                                curveness: 0
+                            }
+                        }]
+                    };
+
+                    // Set the option for the ECharts instance
+                    myChart.setOption(option);
+
+                    // ... further processing or manipulation of nodes and links ...
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                }
+            }
+
+            // Call the fetchData function to initiate the process
+            fetchData();
+        </script>
+    </div>
+</body>

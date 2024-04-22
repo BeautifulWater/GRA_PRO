@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>页面标题</title>
+    引入外部CSS文件（可选）
+    <!-- <link rel="stylesheet" href="styles.css">
+
+    <!-- 添加自定义元数据（可选） -->
+    <meta name="description" content="页面描述">
+    <meta name="author" content="作者信息">
+    <!-- 其他元信息，如关键词、版权等 -->
+
+    <script src="static/assets/js/echarts.min.js"></script>
+</head>
+
+<body>
+    <!-- 页面顶部导航栏（可选） -->
+    <header>
+        <nav>
+            <!-- 导航链接 -->
+        </nav>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main>
+        <div id="demo1" style="width: 600px;height: 400px;"></div>
+        <script>
+            var myChart = echarts.init(document.getElementById('demo1'));
+            //指定图表的配置
+            var option = {
+                title: {
+                    text: 'ECharts 入门示例'
+                },
+                tooltip: {},//  提示框
+                legend: {
+                    data: ['销量']
+                },
+                xAxis: {
+                    data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+                },
+                yAxis: {},
+                series: [
+                    {
+                        name: "人数",
+                        type: "bar",
+                        data: [5, 20, 36, 10, 10, 20]
+                    }
+                ]
+            }
+            //对实例对象对象设置配置
+            myChart.setOption(option);
+        </script>
+    </main>

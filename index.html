@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 当文档加载完成后执行请求
+            fetch('/api/edges')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    console.log(response.json())
+                    return response.json();
+                })
+            // .then(edgesData => {
+            //     // 在这里，edgesData 是一个 JavaScript 对象数组，您可以将其分配给 ECharts 或进行其他处理
+            //     console.log('Received edges data:', edgesData);
+
+            //     // 假设您有一个名为 myChart 的 ECharts 实例
+            //     // 更新图表数据
+            //     myChart.setOption({
+            //         series: [{
+            //             // ... 其他系列配置 ...
+            //             data: edgesData,
+            //             // ... 其他系列配置 ...
+            //         }]
+            //     });
+            // })
+            // .catch(error => {
+            //     console.error('Error fetching edges data:', error);
+            // });
+        });
+    </script>
+    <title>Example Web Page</title>
+    <style>
+        /* Add some basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            line-height: 1.5;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>欢迎来到基于图模型的反洗钱的可视化页面</h1>
+        <!-- <block>{{edges_version_0}}</block> -->
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer auctor, ex vel suscipit rhoncus, mi quam
+            malesuada ante, id interdum ex magna non orci. Nulla facilisi. Suspendisse potenti. Nam ac velit euismod,
+            laoreet metus id, varius tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames
+            ac turpis egestas. Donec ut justo in est bibendum lacinia. Vestibulum ante ipsum primis in faucibus orci
+            luctus et ultrices posuere cubilia curae; Sed tincidunt, purus eget congue venenatis, lectus odio volutpat
+            massa, eu tempus nisl sapien id nunc.</p>
+
+        <p>Nullam euismod, erat vel rutrum eleifend, velit nulla blandit nibh, id fringilla arcu diam a lectus. Aliquam
+            auctor dui ac ex suscipit, a efficitur libero dignissim. In hac habitasse platea dictumst. Duis in lorem
+            euismod, lacinia risus nec, aliquet ex. Nunc quis enim a tellus luctus porttitor. Aenean fermentum, ex non
+            hendrerit cursus, velit nisl condimentum nisi, at sodales orci ligula vel sem.</p>
+
+        <p>Phasellus auctor, ante sed feugiat sollicitudin, velit augue pharetra nisl, ut iaculis ex magna a mauris.
+            Cras auctor, felis non sagittis gravida, ex dui eleifend tortor, vel finibus ante orci a ante. Morbi et
+            tellus ac mi ullamcorper suscipit. Sed vitae justo et lectus suscipit volutpat. Donec auctor, lectus et
+            suscipit suscipit, ante massa convallis justo, id maximus eros neque id nisl.</p>
+        <p>
+
+        </p>
+    </div>
+
+
+
+    <div class="container">
+        <div id="chart-container" style="width: 600px; height: 400px;">111</div>
+        <script>
+            //3.通过document.getElementById()获取到容器元素
+            fetch('/api/edges')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    console.log(response.json())
+                    return response.json();
+                })
+            var myChart = echarts.init(document.getElementById('chart-container'));
+            //4.准备配置项
+            var option = {
+                title: {
+                    text: 'Ei'
+                },
+                tooltip: {}, // 提示框
+                legend: {
+                    data: ['销量']
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [
+                    {
+                        name: '语文',
+                        type: 'bar',
+                        data: [5, 20, 36, 10, 10, 20]
+                    }
+                ]
+            };
+
+            // 5.将配置项设置给echarts实例对象
+            myChart.setOption(option);
+        </script>
+    </div>
+    <div>
+
+    </div>
+    <div class="container">
+        <div id="graph_of_dataset" style="width: 600px; height: 400px;"></div>
+        <script>
+            var myChart = echarts.init(document.getElementById('graph_of_dataset'));
+
+            // 初始化数据和边
+            const edges_0 = [];
+            for (let i = 0; i <= 1000; i++) {
+                if (i < 1000) {
+                    edges_0.push({ source: i, target: i + 1 });
+                } else {
+                    edges_0.push({ source: i, target: 1001 });
+                }
+            }
+            const data = [
+                {
+                    fixed: true,
+                    x: myChart.getWidth() / 2,
+                    y: myChart.getHeight() / 2,
+                    symbolSize: 20,
+                    id: '-1'
+                }
+            ];
+            const edges = edges_0;
+            // 定义节点颜色选项
+            const nodeColors = ['#FF0000', '#0000FF', '#CCCCCC']; // 红色、蓝色、灰色
+
+            // 定义初始图表配置
+            var option = {
+                series: [
+                    {
+                        type: 'graph',
+                        layout: 'force',
+                        animation: false,
+                        data: data,
+                        force: {
+                            repulsion: 100,
+                            edgeLength: 5
+                        },
+                        edges: edges
+                    }
+                ]
+            };
+
+            // 计数器变量
+            let executionCount = 0;
+            let edge_count = 0;
+            //let edges = {{ edges_version_0 }};
+
+            // 更新图表配置的函数
+            function updateChart() {
+
+
+                const newNodeId = data.length.toString();
+                const newNodeColor = nodeColors[Math.floor(Math.random() * nodeColors.length)]; // 随机选择节点颜色
+
+                data.push({
+                    id: newNodeId,
+                    itemStyle: {
+                        color: newNodeColor // 为新节点设置随机颜色
+                    }
+                });
+
+                const source = Math.round((data.length - 1) * Math.random());
+                const target = Math.round((data.length - 1) * Math.random());
+                edge_count = edge_count + 1;
+                console.log("edge_count:", edge_count)
+                if (source !== target) {
+                    edges.push({
+                        source: source,
+                        target: target
+                    });
+                }
+
+                myChart.setOption({
+                    series: [
+                        {
+                            data: data,
+                            edges: edges
+                        }
+                    ]
+                });
+
+                console.log('nodes: ' + data.length);
+                console.log('links: ' + edges.length);
+
+                // 增加执行次数
+                executionCount++;
+
+                // 如果执行次数达到30次，清除定时器
+                if (executionCount === 100000) {
+                    clearInterval(timerId);
+                    console.log('定时器已停止');
+                }
+            }
+
+            // 启动定时器，每200毫秒调用一次updateChart函数
+            const timerId = setInterval(updateChart, 200);
+
+            // 初始渲染图表
+            myChart.setOption(option);
+        </script>
+    </div>
+
+    <div class="container">
+        <div id="graph_of_dataset2" style="width: 600px; height: 400px;">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer auctor, ex vel suscipit rhoncus, mi quam
+                malesuada ante, id interdum ex magna non orci. Nulla facilisi. Suspendisse potenti. Nam ac velit
+                euismod,
+                laoreet metus id, varius tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada
+                fames
+                ac turpis egestas. Donec ut justo in est bibendum lacinia. Vestibulum ante ipsum primis in faucibus orci
+                luctus et ultrices posuere cubilia curae; Sed tincidunt, purus eget congue venenatis, lectus odio
+                volutpat
+                massa, eu tempus nisl sapien id nunc.</p>
+        </div>
+        <script>
+
+        </script>
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!-- 定义文档类型为HTML5，告知浏览器使用HTML5规范解析和渲染页面 -->
+<html lang="en">
+<!-- HTML文档的根元素，`lang="en"` 指定文档语言为英语 -->
+
+<head>
+    <!-- 文档头部，包含元信息和引用的外部资源（如样式表、脚本） -->
+    <meta charset="UTF-8">
+    <!-- 设置文档字符集为UTF-8，确保文本正确显示 -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 设置视口元标签，使页面在不同设备上具有合适的缩放比例和布局 -->
+
+    <link rel="stylesheet" href="../static/assets/css/styles.css">
+    <!-- 引入外部CSS样式表，路径为相对路径 "styles.css" -->
+
+    <title>Page with Navigation Bar</title>
+    <!-- 设置文档标题，将在浏览器标签页显示 -->
+
+</head>
+
+<body>
+    <!-- HTML文档的主体部分，包含可见的内容 -->
+
+
+    <nav class="navbar">
+        <!-- 创建一个导航栏，类名为 "navbar" -->
+        <div class="navbar-brand">
+            <!-- 在导航栏内创建一个包含品牌标识的区域，类名为 "navbar-brand" -->
+            <a href="#" class="logo">基于图模型的反洗钱监测可视化系统</a>
+            <!-- 使用锚点标签创建品牌Logo链接，类名为 "logo"，链接地址为 "#" -->
+        </div>
+
+        <ul class="navbar-menu">
+            <!-- 创建一个无序列表，作为导航菜单，类名为 "navbar-menu" -->
+            <li><a href="page0.html" class="menu-item">可视化</a>
+            </li>
+            <!-- 在导航菜单中添加一个列表项，包含指向 "#" 的链接，类名为 "menu-item"，文本为 "Home" -->
+            <li><a href="page1.html" class="menu-item">管理</a></li>
+            <!-- 同上，文本为 "About" -->
+            <li><a href="page2.html" class="menu-item">黑名单</a></li>
+            <!-- 同上，文本为 "Services" -->
+            <li><a href="page3.html" class="menu-item">联系名单</a></li>
+            <!-- 同上，文本为 "Contact" -->
+        </ul>
+    </nav>
+
+
+    <main>
+        <!-- 主要内容区域 -->
+        <section id="hero">
+            <!-- 创建一个具有唯一ID "hero" 的节（section），通常用于页面顶部的英雄板块 -->
+            <h1>Welcome to Our Page</h1>
+            <!-- 添加一级标题，文本为 "Welcome to Our Page" -->
+            <p>A brief introduction to what this page is about and its purpose.</p>
+            <!-- 添加段落文本，简述页面主题和目的 -->
+            <!-- <a href="#" class="cta-button">Learn More</a> -->
+            <!-- 添加一个呼吁行动（Call-to-action，CTA）按钮，类名为 "cta-button"，链接地址为 "#"，文本为 "Learn More" -->
+        </section>
+    </main>
+
+    <footer style="position: fixed;bottom:0;width: 100%;">
+        <!-- 创建页脚区域 -->
+        <p>&copy; 2023 Your Company. All rights reserved.</p>
+        <!-- 添加版权信息文本 -->
+        <ul class="social-icons">
+            <!-- 创建一个无序列表，类名为 "social-icons"，用于放置社交媒体图标 -->
+            <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+            <!-- 添加一个列表项，包含指向 "#" 的链接，其中包含一个使用Font Awesome库的Facebook图标 -->
+            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+            <!-- 同上，使用Twitter图标 -->
+            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+            <!-- 同上，使用Instagram图标 -->
+        </ul>
+    </footer>
+
+    <script src="scripts.js"></script>
+    <!-- 引入外部JavaScript文件，路径为相对路径 "scripts.js" -->åå
+</body>
+
+</html>

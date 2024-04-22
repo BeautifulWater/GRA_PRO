@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example Web Page</title>
+    <style>
+        /* Add some basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        box-for-chart {
+            width: 600px;
+            height: 400px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            line-height: 1.5;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Welcome to Our Example Web Page</h1>
+
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer auctor, ex vel suscipit rhoncus, mi quam
+            malesuada ante, id interdum ex magna non orci. Nulla facilisi. Suspendisse potenti. Nam ac velit euismod,
+            laoreet metus id, varius tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames
+            ac turpis egestas. Donec ut justo in est bibendum lacinia. Vestibulum ante ipsum primis in faucibus orci
+            luctus et ultrices posuere cubilia curae; Sed tincidunt, purus eget congue venenatis, lectus odio volutpat
+            massa, eu tempus nisl sapien id nunc.</p>
+
+        <p>Nullam euismod, erat vel rutrum eleifend, velit nulla blandit nibh, id fringilla arcu diam a lectus. Aliquam
+            auctor dui ac ex suscipit, a efficitur libero dignissim. In hac habitasse platea dictumst. Duis in lorem
+            euismod, lacinia risus nec, aliquet ex. Nunc quis enim a tellus luctus porttitor. Aenean fermentum, ex non
+            hendrerit cursus, velit nisl condimentum nisi, at sodales orci ligula vel sem.</p>
+
+        <!-- <p>Phasellus auctor, ante sed feugiat sollicitudin, velit augue pharetra nisl, ut iaculis ex magna a mauris.
+            Cras auctor, felis non sagittis gravida, ex dui eleifend tortor, vel finibus ante orci a ante. Morbi et
+            tellus ac mi ullamcorper suscipit. Sed vitae justo et lectus suscipit volutpat. Donec auctor, lectus et
+            suscipit suscipit, ante massa convallis justo, id maximus eros neque id nisl.</p> -->
+    </div>
+
+    <div id="chart-container" class="box-for-chart">11122</div>
+    <script>
+        var myChart = echarts.init(document.getElementById('chart-container'));
+        // 准备配置项
+        var option = {
+            title: {
+                text: 'ECharts 入门示例'
+            },
+            tooltip: {}, // 提示框
+            legend: {
+                data: ['销量']
+            },
+            xAxis: {
+                type: 'category',
+                data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: '语文',
+                    type: 'bar',
+                    data: [5, 20, 36, 10, 10, 20]
+                }
+            ]
+        };
+
+        // 将配置项设置给echarts实例对象
+        myChart.setOption(option);
+    </script>
+</body>
+
+</html>
